@@ -1,0 +1,23 @@
+name: GitHub Security Alerts for Jira
+
+on:
+  push:
+    branches: [ "master" ]
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  syncSecurityAlerts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Sync security alerts to Jira issues"
+        uses: reload/github-security-jira@v1.4.0
+        env:
+          GH_SECURITY_TOKEN: ${{ secrets.GitHubSecurityToken }}
+          JIRA_TOKEN: ${{ secrets.JiraApiToken }}
+          JIRA_HOST: https://billo-bagge.atlassian.net
+          JIRA_USER: v.bhat24@gmail.com
+          JIRA_PROJECT: DVNJS
+          JIRA_ISSUE_TYPE: Bug
+          JIRA_WATCHERS: v.bhat24@gmail.com
+          JIRA_RESTRICTED_COMMENT_ROLE: Administrators
